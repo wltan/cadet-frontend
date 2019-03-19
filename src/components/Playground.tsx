@@ -62,6 +62,7 @@ export interface IDispatchProps {
   handleReplValueChange: (newValue: string) => void;
   handleSideContentHeightChange: (heightChange: number) => void;
   handleToggleEditorAutorun: () => void;
+  handleToggleSubst: () => void;
 }
 
 type PlaygroundState = {
@@ -93,6 +94,7 @@ class Playground extends React.Component<IPlaygroundProps, PlaygroundState> {
         handleReplEval: this.props.handleReplEval,
         handleReplOutputClear: this.props.handleReplOutputClear,
         handleToggleEditorAutorun: this.props.handleToggleEditorAutorun,
+        handleToggleSubst: this.props.handleToggleSubst,
         hasChapterSelect: true,
         hasEditorAutorunButton: true,
         hasSaveButton: false,
