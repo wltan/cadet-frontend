@@ -9,6 +9,8 @@ export class SubstTimeline extends React.Component {
   constructor(props : ISubstTimelineProps) {
     super(props);
     this.trees = props.trees;
+    this.sliderChanged = this.sliderChanged.bind(this);
+    this.setState({value: 0});
   }
 
   public render() {
@@ -19,14 +21,14 @@ export class SubstTimeline extends React.Component {
             this.generateFromTree(this.trees[0]) : "todo"
           }
         </div>
-
-        <input type="range" min="1" max="100" value="1" onChange={this.sliderChanged}/>
+        <input type="range" min="0" max="100" defaultValue="0" onChange={this.sliderChanged}/>
       </div>
     );
   }
 
   private sliderChanged() {
 
+    
   }
 
   private generateFromTree(tree : es.Program) : string {
