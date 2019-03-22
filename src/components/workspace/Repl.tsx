@@ -53,20 +53,23 @@ export const Output: React.SFC<IOutputProps> = props => {
         </Card>
       );
     case 'result':
-      if (props.output.consoleLogs.length === 0) {
-        return (
-          <Card>
-            <pre className="resultOutput">{renderResult(props.output.value)}</pre>
-          </Card>
-        );
-      } else {
-        return (
-          <Card>
-            <pre className="logOutput">{props.output.consoleLogs.join('\n')}</pre>
-            <pre className="resultOutput">{renderResult(props.output.value)}</pre>
-          </Card>
-        );
-      }
+        if (props.output.consoleLogs.length === 0) {
+          return (
+            <Card>
+              <pre className="resultOutput">{renderResult(props.output.value)}</pre>
+            </Card>
+          );
+        } else {
+          return (
+            <Card>
+              <pre className="logOutput">{props.output.consoleLogs.join('\n')}</pre>
+              <pre className="resultOutput">{renderResult(props.output.value)}</pre>
+            </Card>
+          );
+    }
+
+
+
     case 'errors':
       if (props.output.consoleLogs.length === 0) {
         return (

@@ -16,7 +16,6 @@ import {
   generateLzString,
   playgroundExternalSelect,
   toggleEditorAutorun,
-  toggleSubst,
   updateEditorValue,
   updateReplValue,
   WorkspaceLocation
@@ -60,8 +59,7 @@ const mapDispatchToProps: MapDispatchToProps<IDispatchProps, {}> = (dispatch: Di
       handleReplValueChange: (newValue: string) => updateReplValue(newValue, location),
       handleSideContentHeightChange: (heightChange: number) =>
         changeSideContentHeight(heightChange, location),
-      handleToggleEditorAutorun: () => toggleEditorAutorun(location),
-      handleToggleSubst: () => toggleSubst()
+      handleToggleEditorAutorun: () => toggleEditorAutorun(location)
 
 
     },

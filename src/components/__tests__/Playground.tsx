@@ -30,8 +30,7 @@ const baseProps = {
   handleReplOutputClear: () => {},
   handleReplValueChange: (code: string) => {},
   handleSideContentHeightChange: (h: number) => {},
-  handleToggleEditorAutorun: () => {},
-  handleToggleSubst: () => {}
+  handleToggleEditorAutorun: () => {}
 };
 
 const testValueProps: IPlaygroundProps = {

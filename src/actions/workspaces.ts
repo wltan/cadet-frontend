@@ -95,9 +95,6 @@ export const toggleEditorAutorun: ActionCreator<actionTypes.IAction> = (
   type: actionTypes.TOGGLE_EDITOR_AUTORUN,
   payload: { workspaceLocation }
 });
-
-export const toggleSubst = () => null; // PLACEHOLDER
-
 /**
  * Starts the process to clear the js-slang Context
  * at a specified workspace location.
