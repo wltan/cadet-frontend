@@ -10,6 +10,7 @@ import Markdown from './commons/Markdown';
 import Workspace, { WorkspaceProps } from './workspace';
 import { SideContentTab } from './workspace/side-content';
 import ListVisualizer from './workspace/side-content/ListVisualizer';
+import SubstVisualizer from './workspace/side-content/SubstVisualizer';
 
 const CHAP = '\xa7';
 
@@ -124,7 +125,7 @@ class Playground extends React.Component<IPlaygroundProps, PlaygroundState> {
       sideContentProps: {
         activeTab: this.props.activeTab,
         handleChangeActiveTab: this.props.handleChangeActiveTab,
-        tabs: [playgroundIntroductionTab, listVisualizerTab]
+        tabs: [playgroundIntroductionTab, listVisualizerTab, substVisualizerTab]
       }
     };
     return (
@@ -153,6 +154,12 @@ const listVisualizerTab: SideContentTab = {
   label: 'List Visualizer',
   icon: IconNames.EYE_OPEN,
   body: <ListVisualizer />
+};
+
+const substVisualizerTab: SideContentTab = {
+  label: 'Substitution Model Visualizer',
+  icon: IconNames.STOP,
+  body: <SubstVisualizer />
 };
 
 export default Playground;
