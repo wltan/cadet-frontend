@@ -10,7 +10,7 @@ export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISub
     super(props);
     this.trees = props.trees;
     this.sliderChanged = this.sliderChanged.bind(this);
-    this.setState({value: 0});
+    this.state = {value: 0};
   }
 
   public render() {
@@ -18,7 +18,7 @@ export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISub
       <div>
         <div>
           {this.trees
-            ? this.generateFromTree(this.trees[this.state.value])
+            ? this.generateFromTree(this.trees[this.state.value]) // this.state.value
             : "Start writing some code on the left, then drag the slider below to see it's evaluation."
           }
         </div>
