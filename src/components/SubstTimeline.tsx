@@ -2,9 +2,9 @@ import { generate } from 'astring';
 import * as es from 'estree';
 import * as React from 'react';
 
-export class SubstTimeline extends React.Component {
+export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISubstTimelineState> {
 
-  private trees : es.Program[];
+  private trees? : es.Program[];
 
   constructor(props : ISubstTimelineProps) {
     super(props);
@@ -17,8 +17,9 @@ export class SubstTimeline extends React.Component {
     return (
       <div>
         <div>
-          {this.trees? 
-            this.generateFromTree(this.trees[0]) : "todo"
+          {this.trees
+            ? this.generateFromTree(this.trees[this.state.value])
+            : "Start writing some code on the left, then drag the slider below to see it's evaluation."
           }
         </div>
         <input type="range" min="0" max="100" defaultValue="0" onChange={this.sliderChanged}/>
@@ -36,9 +37,12 @@ export class SubstTimeline extends React.Component {
   }
 }
 
-export interface ISubstTimelineProps {
+interface ISubstTimelineState {
+  value : number;
+}
 
-  trees : es.Program[]; // todo
+export interface ISubstTimelineProps {
+  trees? : es.Program[]; // todo
 }
 
 export default SubstTimeline;
