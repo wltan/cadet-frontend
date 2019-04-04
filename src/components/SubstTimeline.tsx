@@ -22,14 +22,15 @@ export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISub
             : "Start writing some code on the left, then drag the slider below to see it's evaluation."
           }
         </div>
-        <input type="range" min="0" max="100" defaultValue="0" onChange={this.sliderChanged}/>
+        <input id="substSlider" type="range" min="0" max={this.trees? this.trees.length-1 : 0} defaultValue="0" onChange={this.sliderChanged}/>
       </div>
     );
   }
 
-  private sliderChanged() {
+  private sliderChanged(event : React.ChangeEvent<HTMLInputElement>) {
 
-    
+    const sliderValue = parseInt(event.target.value, 10);
+    this.setState({value: sliderValue});
   }
 
   private generateFromTree(tree : es.Program) : string {

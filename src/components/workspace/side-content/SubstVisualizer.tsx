@@ -12,7 +12,7 @@ class SubstVisualizer extends React.Component<ISubstTimelineProps, {}> {
 
     const n = parse("function f(x) {return x + 1;} f(5);");
 
-    this.tre = [(n as any) as Program];
+    this.tre = [(n as any) as Program, (n as any) as Program];
   }
 
   public render() {
