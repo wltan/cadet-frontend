@@ -33,6 +33,9 @@ the REPL.
 
 export interface IPlaygroundProps extends IDispatchProps, IStateProps, RouteComponentProps<{}> {}
 
+const theSubstVisualizer = new SubstVisualizer({});
+// const theSubstVisualizerElem = theSubstVisualizer.render();
+
 export interface IStateProps {
   activeTab: number;
   editorValue: string;
@@ -71,7 +74,6 @@ type PlaygroundState = {
 
 class Playground extends React.Component<IPlaygroundProps, PlaygroundState> {
   private keyMap = { goGreen: 'h u l k' };
-
   private handlers = { goGreen: () => {} };
 
   constructor(props: IPlaygroundProps) {
@@ -119,7 +121,8 @@ class Playground extends React.Component<IPlaygroundProps, PlaygroundState> {
         handleBrowseHistoryDown: this.props.handleBrowseHistoryDown,
         handleBrowseHistoryUp: this.props.handleBrowseHistoryUp,
         handleReplEval: this.props.handleReplEval,
-        handleReplValueChange: this.props.handleReplValueChange
+        handleReplValueChange: this.props.handleReplValueChange,
+        substVisualizer: theSubstVisualizer
       },
       sideContentHeight: this.props.sideContentHeight,
       sideContentProps: {

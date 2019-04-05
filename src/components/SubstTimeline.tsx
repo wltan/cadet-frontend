@@ -1,24 +1,37 @@
 import { generate } from 'astring';
 import * as es from 'estree';
+import { Context } from 'js-slang/dist/types';
 import * as React from 'react';
 
 export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISubstTimelineState> {
 
-  private trees? : es.Program[];
+  private trees? : Array<[es.Node, Context]>;
+  private mounted = false;
+  private $parent: HTMLElement | null;
 
   constructor(props : ISubstTimelineProps) {
     super(props);
     this.trees = props.trees;
     this.sliderChanged = this.sliderChanged.bind(this);
-    this.state = {value: 0};
+    this.updateTrees = this.updateTrees.bind(this);
+  }
+
+  public componentDidMount() {
+    this.mounted = true;
+    if (this.$parent) {
+      (window as any).SubstTimeline.init(this.$parent);
+    }
   }
 
   public render() {
+
+    const value = (this.state && this.state.value) ? this.state.value : 0;
+
     return (
       <div>
         <div>
           {this.trees
-            ? this.generateFromTree(this.trees[this.state.value]) // this.state.value
+            ? this.generateFromTree(this.trees[value][0]) // this.state.value
             : "Start writing some code on the left, then drag the slider below to see it's evaluation."
           }
         </div>
@@ -27,23 +40,39 @@ export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISub
     );
   }
 
+
+  public updateTrees(newTrees : Array<[es.Node, Context]>){
+    
+    // WE ALREADY HAVE THE DATA HERE, NOW JUST NEED TO UPDATE.
+    this.trees = newTrees;
+    
+    if (this.mounted) {
+      this.trees = newTrees;
+      this.setState({trees: this.trees});
+    }
+    else {
+      alert("no");
+    }
+  }
+
   private sliderChanged(event : React.ChangeEvent<HTMLInputElement>) {
 
     const sliderValue = parseInt(event.target.value, 10);
-    this.setState({value: sliderValue});
+    this.setState({value: sliderValue, trees: this.state.trees});
   }
 
-  private generateFromTree(tree : es.Program) : string {
+  private generateFromTree(tree : es.Node) : string {
     return generate(tree);
   }
 }
 
-interface ISubstTimelineState {
+export interface ISubstTimelineState {
   value : number;
+  trees : Array<[es.Node, Context]>;
 }
 
 export interface ISubstTimelineProps {
-  trees? : es.Program[]; // todo
+  trees? : Array<[es.Node, Context]>; // todo
 }
 
 export default SubstTimeline;

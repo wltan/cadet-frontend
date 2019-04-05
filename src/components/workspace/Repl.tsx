@@ -7,6 +7,9 @@ import { HotKeys } from 'react-hotkeys';
 import { InterpreterOutput } from '../../reducers/states';
 import CanvasOutput from './CanvasOutput';
 import ReplInput, { IReplInputProps } from './ReplInput';
+import SubstVisualizer from './side-content/SubstVisualizer';
+
+export let theSubstVisualizer: SubstVisualizer;
 
 export interface IReplProps {
   output: InterpreterOutput[];
@@ -15,15 +18,24 @@ export interface IReplProps {
   handleBrowseHistoryUp: () => void;
   handleReplEval: () => void;
   handleReplValueChange: (newCode: string) => void;
+  substVisualizer?: any;
 }
 
 export interface IOutputProps {
   output: InterpreterOutput;
+  substVisualizer?: any;
 }
 
 class Repl extends React.PureComponent<IReplProps, {}> {
+
+  public constructor(props : IReplProps) {
+    super(props);
+    theSubstVisualizer = this.props.substVisualizer;
+  }
+
   public render() {
     const cards = this.props.output.map((slice, index) => <Output output={slice} key={index} />);
+    theSubstVisualizer = this.props.substVisualizer;
     const inputProps: IReplInputProps = this.props as IReplInputProps;
     return (
       <div className="Repl">
@@ -53,13 +65,35 @@ export const Output: React.SFC<IOutputProps> = props => {
         </Card>
       );
     case 'result':
-        if (props.output.consoleLogs.length === 0) {
+        if (props.output.value instanceof Array) {
+          
+          
+          if ((window as any).SubstTimeline) {
+            (window as any).SubstTimeline.updateTrees(props.output.value);
+          }
+          else {
+            alert("couldn't find it eh");
+          }
+/*
+          if (theSubstVisualizer) {
+            (theSubstVisualizer as SubstVisualizer).updateTrees(props.output.value);
+          }*/
+
           return (
             <Card>
+              HOOOOOO
+            </Card>
+          );
+        }
+        else if (props.output.consoleLogs.length === 0) {
+          return (
+            <Card>
+              {props.output.value}
               <pre className="resultOutput">{renderResult(props.output.value)}</pre>
             </Card>
           );
-        } else {
+        }
+        else {
           return (
             <Card>
               <pre className="logOutput">{props.output.consoleLogs.join('\n')}</pre>
