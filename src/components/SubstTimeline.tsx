@@ -31,7 +31,7 @@ export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISub
       <div>
         <div>
           {this.trees
-            ? this.generateFromTree(this.trees[value][0]) // this.state.value
+            ? this.generateFromTree(this.trees[value][0])
             : "Start writing some code on the left, then drag the slider below to see it's evaluation."
           }
         </div>
@@ -43,7 +43,6 @@ export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISub
 
   public updateTrees(newTrees : Array<[es.Node, Context]>){
     
-    // WE ALREADY HAVE THE DATA HERE, NOW JUST NEED TO UPDATE.
     this.trees = newTrees;
     
     if (this.mounted) {
@@ -51,7 +50,7 @@ export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISub
       this.setState({trees: this.trees});
     }
     else {
-      alert("no");
+      alert("unmounted");
     }
   }
 
@@ -72,7 +71,7 @@ export interface ISubstTimelineState {
 }
 
 export interface ISubstTimelineProps {
-  trees? : Array<[es.Node, Context]>; // todo
+  trees? : Array<[es.Node, Context]>; 
 }
 
 export default SubstTimeline;

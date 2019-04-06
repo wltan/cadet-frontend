@@ -7,9 +7,6 @@ import { HotKeys } from 'react-hotkeys';
 import { InterpreterOutput } from '../../reducers/states';
 import CanvasOutput from './CanvasOutput';
 import ReplInput, { IReplInputProps } from './ReplInput';
-import SubstVisualizer from './side-content/SubstVisualizer';
-
-export let theSubstVisualizer: SubstVisualizer;
 
 export interface IReplProps {
   output: InterpreterOutput[];
@@ -30,12 +27,10 @@ class Repl extends React.PureComponent<IReplProps, {}> {
 
   public constructor(props : IReplProps) {
     super(props);
-    theSubstVisualizer = this.props.substVisualizer;
   }
 
   public render() {
     const cards = this.props.output.map((slice, index) => <Output output={slice} key={index} />);
-    theSubstVisualizer = this.props.substVisualizer;
     const inputProps: IReplInputProps = this.props as IReplInputProps;
     return (
       <div className="Repl">
@@ -67,17 +62,9 @@ export const Output: React.SFC<IOutputProps> = props => {
     case 'result':
         if (props.output.value instanceof Array) {
           
-          
           if ((window as any).SubstTimeline) {
             (window as any).SubstTimeline.updateTrees(props.output.value);
           }
-          else {
-            alert("couldn't find it eh");
-          }
-/*
-          if (theSubstVisualizer) {
-            (theSubstVisualizer as SubstVisualizer).updateTrees(props.output.value);
-          }*/
 
           return (
             <Card>

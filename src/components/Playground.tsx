@@ -33,9 +33,6 @@ the REPL.
 
 export interface IPlaygroundProps extends IDispatchProps, IStateProps, RouteComponentProps<{}> {}
 
-const theSubstVisualizer = new SubstVisualizer({});
-// const theSubstVisualizerElem = theSubstVisualizer.render();
-
 export interface IStateProps {
   activeTab: number;
   editorValue: string;
@@ -121,8 +118,7 @@ class Playground extends React.Component<IPlaygroundProps, PlaygroundState> {
         handleBrowseHistoryDown: this.props.handleBrowseHistoryDown,
         handleBrowseHistoryUp: this.props.handleBrowseHistoryUp,
         handleReplEval: this.props.handleReplEval,
-        handleReplValueChange: this.props.handleReplValueChange,
-        substVisualizer: theSubstVisualizer
+        handleReplValueChange: this.props.handleReplValueChange
       },
       sideContentHeight: this.props.sideContentHeight,
       sideContentProps: {
