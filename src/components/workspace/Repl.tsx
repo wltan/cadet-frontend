@@ -62,13 +62,15 @@ export const Output: React.SFC<IOutputProps> = props => {
     case 'result':
         if (props.output.value instanceof Array) {
           
-          if ((window as any).SubstTimeline) {
-            (window as any).SubstTimeline.updateTrees(props.output.value);
+          const theSubstTimeline = (window as any).SubstTimeline;
+
+          if (theSubstTimeline) {
+            theSubstTimeline.updateTrees(props.output.value);
           }
 
           return (
             <Card>
-              HOOOOOO
+              {theSubstTimeline? theSubstTimeline.getFinalValue() : ""}
             </Card>
           );
         }

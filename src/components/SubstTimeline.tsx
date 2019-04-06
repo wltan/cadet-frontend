@@ -14,6 +14,7 @@ export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISub
     this.trees = props.trees;
     this.sliderChanged = this.sliderChanged.bind(this);
     this.updateTrees = this.updateTrees.bind(this);
+    this.getFinalValue = this.getFinalValue.bind(this);
   }
 
   public componentDidMount() {
@@ -51,6 +52,16 @@ export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISub
     }
     else {
       alert("unmounted");
+    }
+  }
+
+  public getFinalValue() {
+
+    if (this.trees) {
+      return this.generateFromTree(this.trees[this.trees.length-1][0]);
+    }
+    else {
+      return "";
     }
   }
 
