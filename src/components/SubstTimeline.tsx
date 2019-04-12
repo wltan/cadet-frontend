@@ -54,6 +54,7 @@ export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISub
       if (this.slider) {
         this.slider.max = (this.trees.length - 1).toString();
         this.slider.value = (this.trees.length - 1).toString();
+        this.setState({value: parseInt(this.slider.value, 10)});
       }
     }
     else {
