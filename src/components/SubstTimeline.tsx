@@ -7,8 +7,7 @@ export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISub
 
   private trees? : Array<[es.Node, Context]>;
   private mounted = false;
-  private $parent: HTMLElement | null;
-
+  
   constructor(props : ISubstTimelineProps) {
     super(props);
     this.trees = props.trees;
@@ -19,9 +18,6 @@ export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISub
 
   public componentDidMount() {
     this.mounted = true;
-    if (this.$parent) {
-      (window as any).SubstTimeline.init(this.$parent);
-    }
   }
 
   public render() {
