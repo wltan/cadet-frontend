@@ -7,6 +7,7 @@ export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISub
 
   private trees? : Array<[es.Node, Context]>;
   private mounted = false;
+  private slider : HTMLInputElement | null;
   
   constructor(props : ISubstTimelineProps) {
     super(props);
@@ -32,19 +33,28 @@ export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISub
             : "Start writing some code on the left, then drag the slider below to see it's evaluation."
           }
         </div>
-        <input id="substSlider" type="range" min="0" max={this.trees? this.trees.length-1 : 0} defaultValue="0" onChange={this.sliderChanged}/>
+        <input ref={x=>this.slider=x} id="substSlider" type="range" min="0" max={this.trees? this.trees.length-1 : 0} defaultValue="0" onChange={this.sliderChanged}/>
       </div>
     );
   }
 
-
   public updateTrees(newTrees : Array<[es.Node, Context]>){
     
     this.trees = newTrees;
-    
+
     if (this.mounted) {
       this.trees = newTrees;
+
+      if (this.slider) {
+        this.slider.value = "0";
+      }
+
       this.setState({trees: this.trees});
+
+      if (this.slider) {
+        this.slider.max = (this.trees.length - 1).toString();
+        this.slider.value = (this.trees.length - 1).toString();
+      }
     }
     else {
       alert("unmounted");
