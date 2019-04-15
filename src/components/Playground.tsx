@@ -77,6 +77,7 @@ class Playground extends React.Component<IPlaygroundProps, PlaygroundState> {
     super(props);
     this.state = { isGreen: false };
     this.handlers.goGreen = this.toggleIsGreen.bind(this);
+    (window as any).thePlayground = this;
   }
 
   public render() {
@@ -136,6 +137,10 @@ class Playground extends React.Component<IPlaygroundProps, PlaygroundState> {
         <Workspace {...workspaceProps} />
       </HotKeys>
     );
+  }
+
+  public usingSubst() : boolean { 
+    return this.props.activeTab === 2;
   }
 
   private toggleIsGreen() {

@@ -257,7 +257,7 @@ function* playgroundSaga(): SagaIterator {
 
 function* evalCode(code: string, context: Context, location: WorkspaceLocation) {
   const { result, interrupted } = yield race({
-    result: call(runInContext, code, context, { scheduler: 'preemptive', useSubst: true }),
+    result: call(runInContext, code, context, { scheduler: 'preemptive', useSubst: !!((window as any).thePlayground) && (window as any).thePlayground.usingSubst()}),
     /**
      * A BEGIN_INTERRUPT_EXECUTION signals the beginning of an interruption,
      * i.e the trigger for the interpreter to interrupt execution.

@@ -77,7 +77,6 @@ export const Output: React.SFC<IOutputProps> = props => {
         else if (props.output.consoleLogs.length === 0) {
           return (
             <Card>
-              {props.output.value}
               <pre className="resultOutput">{renderResult(props.output.value)}</pre>
             </Card>
           );
