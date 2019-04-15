@@ -22,6 +22,9 @@ export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISub
     this.stepPrev = this.stepPrev.bind(this);
     this.stepNext = this.stepNext.bind(this);
     this.stepLast = this.stepLast.bind(this);
+
+    this.enableFirstAndPrevButton = this.enableFirstAndPrevButton.bind(this);
+    this.enableLastAndNextButton = this.enableLastAndNextButton.bind(this);
   }
 
   public componentDidMount() {
@@ -41,10 +44,10 @@ export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISub
           }
         </div>
         <span>
-          <button onClick={this.stepFirst}>{"|<"}</button>
-          <button onClick={this.stepPrev}>{"<"}</button>
-          <button onClick={this.stepNext}>{">"}</button>
-          <button onClick={this.stepLast}>{">|"}</button>
+          <button onClick={this.stepFirst} disabled={!this.enableFirstAndPrevButton()}>{"|<"}</button>
+          <button onClick={this.stepPrev} disabled={!this.enableFirstAndPrevButton()}>{"<"}</button>
+          <button onClick={this.stepNext} disabled={!this.enableLastAndNextButton()}>{">"}</button>
+          <button onClick={this.stepLast} disabled={!this.enableLastAndNextButton()}>{">|"}</button>
           <input ref={x=>this.slider=x} id="substSlider" type="range" min="0" max={this.trees? this.trees.length-1 : 0} defaultValue="0" onChange={this.sliderChanged}/>
         </span>
       </div>
@@ -67,7 +70,7 @@ export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISub
       if (this.slider) {
         this.slider.max = (this.trees.length - 1).toString();
         this.slider.value = (this.trees.length - 1).toString();
-        this.setState({value: parseInt(this.slider.value, 10)});
+        this.setState({value: this.sliderValue()});
       }
     }
     else {
@@ -105,6 +108,18 @@ export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISub
     }
   }
 
+
+  private generateFromTree(tree : es.Node) : string {
+    return generate(tree);
+  }
+
+  private sliderValue() {
+    return this.slider ? parseInt(this.slider.value, 10) : -1;
+  }
+
+
+
+
   private stepFirst() {
     this.sliderShift(0);
   }
@@ -114,15 +129,19 @@ export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISub
   }
 
   private stepPrev() {
-    this.sliderShift(this.slider ? parseInt(this.slider.value, 10) - 1 : 0);
+    this.sliderShift(this.sliderValue() - 1);
   }
 
   private stepNext() {
-    this.sliderShift(this.slider ? parseInt(this.slider.value, 10) + 1 : 0);
+    this.sliderShift(this.sliderValue() + 1);
   }
 
-  private generateFromTree(tree : es.Node) : string {
-    return generate(tree);
+  private enableFirstAndPrevButton() {
+    return this.trees && this.state && this.mounted && this.sliderValue() > 0;
+  }
+
+  private enableLastAndNextButton() {
+    return this.trees && this.state && this.mounted && this.sliderValue() < this.trees.length-1 && this.sliderValue() >= 0;
   }
 }
 
