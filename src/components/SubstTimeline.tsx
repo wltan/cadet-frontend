@@ -50,7 +50,7 @@ export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISub
           <button onClick={this.stepPrev} onKeyDown={this.handleKeyDown} disabled={!this.enableFirstAndPrevButton()}>{"<"}</button>
           <button onClick={this.stepNext} onKeyDown={this.handleKeyDown} disabled={!this.enableLastAndNextButton()}>{">"}</button>
           <button onClick={this.stepLast} onKeyDown={this.handleKeyDown} disabled={!this.enableLastAndNextButton()}>{">|"}</button>
-          <input ref={x=>this.slider=x} id="substSlider" type="range" min="0" max={this.trees? this.trees.length-1 : 0} defaultValue="0" onChange={this.sliderChanged}/>
+          <input ref={x=>this.slider=x} id="substSlider" type="range" min="0" max={this.trees? this.trees.length-1 : 0} defaultValue="0" onChange={this.sliderChanged} onKeyDown={this.handleKeyDown}/>
         </span>
       </div>
     );
@@ -147,7 +147,9 @@ export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISub
     return this.trees && this.state && this.mounted && this.sliderValue() < this.trees.length-1 && this.sliderValue() >= 0;
   }
 
-  private handleKeyDown(event : React.KeyboardEvent<HTMLButtonElement>) {
+  private handleKeyDown(event : React.KeyboardEvent<HTMLButtonElement | HTMLInputElement>) {
+
+    event.preventDefault();
 
     if (event.keyCode === Keys.ARROW_DOWN) {
       this.stepLast();
