@@ -65,6 +65,7 @@ export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISub
 
       if (this.slider) {
         this.slider.value = "0";
+        this.slider.focus();
       }
 
       this.setState({trees: this.trees});
