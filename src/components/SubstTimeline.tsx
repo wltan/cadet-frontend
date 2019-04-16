@@ -1,3 +1,4 @@
+import { Keys } from '@blueprintjs/core';
 import { generate } from 'astring';
 import * as es from 'estree';
 import { Context } from 'js-slang/dist/types';
@@ -22,6 +23,7 @@ export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISub
     this.stepPrev = this.stepPrev.bind(this);
     this.stepNext = this.stepNext.bind(this);
     this.stepLast = this.stepLast.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
 
     this.enableFirstAndPrevButton = this.enableFirstAndPrevButton.bind(this);
     this.enableLastAndNextButton = this.enableLastAndNextButton.bind(this);
@@ -44,10 +46,10 @@ export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISub
           }
         </div>
         <span>
-          <button onClick={this.stepFirst} disabled={!this.enableFirstAndPrevButton()}>{"|<"}</button>
-          <button onClick={this.stepPrev} disabled={!this.enableFirstAndPrevButton()}>{"<"}</button>
-          <button onClick={this.stepNext} disabled={!this.enableLastAndNextButton()}>{">"}</button>
-          <button onClick={this.stepLast} disabled={!this.enableLastAndNextButton()}>{">|"}</button>
+          <button onClick={this.stepFirst} onKeyDown={this.handleKeyDown} disabled={!this.enableFirstAndPrevButton()}>{"|<"}</button>
+          <button onClick={this.stepPrev} onKeyDown={this.handleKeyDown} disabled={!this.enableFirstAndPrevButton()}>{"<"}</button>
+          <button onClick={this.stepNext} onKeyDown={this.handleKeyDown} disabled={!this.enableLastAndNextButton()}>{">"}</button>
+          <button onClick={this.stepLast} onKeyDown={this.handleKeyDown} disabled={!this.enableLastAndNextButton()}>{">|"}</button>
           <input ref={x=>this.slider=x} id="substSlider" type="range" min="0" max={this.trees? this.trees.length-1 : 0} defaultValue="0" onChange={this.sliderChanged}/>
         </span>
       </div>
@@ -142,6 +144,22 @@ export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISub
 
   private enableLastAndNextButton() {
     return this.trees && this.state && this.mounted && this.sliderValue() < this.trees.length-1 && this.sliderValue() >= 0;
+  }
+
+  private handleKeyDown(event : React.KeyboardEvent<HTMLButtonElement>) {
+
+    if (event.keyCode === Keys.ARROW_DOWN) {
+      this.stepLast();
+    }
+    else if (event.keyCode === Keys.ARROW_UP) {
+      this.stepFirst();
+    }
+    else if (event.keyCode === Keys.ARROW_LEFT) {
+      this.stepPrev();
+    }
+    else if (event.keyCode === Keys.ARROW_RIGHT) {
+      this.stepNext();
+    }
   }
 }
 
