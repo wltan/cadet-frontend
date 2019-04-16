@@ -45,13 +45,14 @@ export class SubstTimeline extends React.PureComponent<ISubstTimelineProps, ISub
             : "Start writing some code on the left, then drag the slider below to see it's evaluation."
           }
         </div>
-        <span>
-          <button onClick={this.stepFirst} onKeyDown={this.handleKeyDown} disabled={!this.enableFirstAndPrevButton()}>{"|<"}</button>
-          <button onClick={this.stepPrev} onKeyDown={this.handleKeyDown} disabled={!this.enableFirstAndPrevButton()}>{"<"}</button>
-          <button onClick={this.stepNext} onKeyDown={this.handleKeyDown} disabled={!this.enableLastAndNextButton()}>{">"}</button>
-          <button onClick={this.stepLast} onKeyDown={this.handleKeyDown} disabled={!this.enableLastAndNextButton()}>{">|"}</button>
-          <input ref={x=>this.slider=x} id="substSlider" type="range" min="0" max={this.trees? this.trees.length-1 : 0} defaultValue="0" onChange={this.sliderChanged} onKeyDown={this.handleKeyDown}/>
-        </span>
+        <br/>
+        <div>
+          <button className="pt-button" onClick={this.stepFirst} onKeyDown={this.handleKeyDown} disabled={!this.enableFirstAndPrevButton()}>{"|<"}</button>
+          <button className="pt-button" onClick={this.stepPrev} onKeyDown={this.handleKeyDown} disabled={!this.enableFirstAndPrevButton()}>{"<"}</button>
+          <button className="pt-button" onClick={this.stepNext} onKeyDown={this.handleKeyDown} disabled={!this.enableLastAndNextButton()}>{">"}</button>
+          <button className="pt-button" onClick={this.stepLast} onKeyDown={this.handleKeyDown} disabled={!this.enableLastAndNextButton()}>{">|"}</button>
+          <input className="slider" ref={x=>this.slider=x} type="range" min="0" max={this.trees? this.trees.length-1 : 0} defaultValue="0" onChange={this.sliderChanged} onKeyDown={this.handleKeyDown}/>
+        </div>
       </div>
     );
   }
