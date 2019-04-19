@@ -163,6 +163,12 @@ $code-color-error: #ff4444;
     }
   }
 
+  .side-content-text .slider {
+    $a: 100%;
+    $b: 140px;
+    width: calc(#{$a} - #{$b});
+  }
+
   .grading-editor-input-parent {
     /* Position the editor away from the buttons */
     /* Cause the 'save' button shift down when size is small. */
