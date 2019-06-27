@@ -1,6 +1,8 @@
 import { SagaIterator } from 'redux-saga';
 import { call, put, select, takeEvery } from 'redux-saga/effects';
 
+import { retrieveLocalAssessment } from 'src/components/missionControl/xmlParseHelper';
+
 import * as actions from '../actions';
 import * as actionTypes from '../actions/actionTypes';
 import { Grading, GradingQuestion } from '../components/academy/grading/gradingShape';
@@ -9,7 +11,7 @@ import { store } from '../createStore';
 import { IState } from '../reducers/states';
 import { history } from '../utils/history';
 import { showSuccessMessage } from '../utils/notification';
-import { mockAssessmentOverviews, mockAssessments } from './assessmentAPI';
+import { mockAssessmentOverviews } from './assessmentAPI';
 import { mockFetchGrading, mockFetchGradingOverview } from './gradingAPI';
 
 export function* mockBackendSaga(): SagaIterator {
@@ -37,8 +39,8 @@ export function* mockBackendSaga(): SagaIterator {
   });
 
   yield takeEvery(actionTypes.FETCH_ASSESSMENT, function*(action) {
-    const id = (action as actionTypes.IAction).payload;
-    const assessment = mockAssessments[id];
+    const assessment = retrieveLocalAssessment()!;
+    assessment.id = (action as actionTypes.IAction).payload;
     yield put(actions.updateAssessment({ ...assessment }));
   });
 

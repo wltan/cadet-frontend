@@ -18,6 +18,7 @@ import Textarea from 'react-textarea-autosize';
 
 import defaultCoverImage from '../../assets/default_cover_image.jpg';
 import { getPrettyDate } from '../../utils/dateHelpers';
+import { history } from '../../utils/history';
 import { assessmentCategoryLink } from '../../utils/paramParseHelpers';
 import { exportXml, storeLocalAssessmentOverview } from './xmlParseHelper';
 
@@ -100,6 +101,8 @@ export class EditingOverviewCard extends React.Component<Props, IState> {
     exportXml();
   };
 
+  
+
   private makeEditingOverviewTextarea = (field: keyof IAssessmentOverview) => (
     <Textarea
       autoFocus={true}
@@ -156,6 +159,9 @@ export class EditingOverviewCard extends React.Component<Props, IState> {
                   : `${getPrettyDate(overview.closeAt)}`}
               </div>
             </Text>
+            {controlButton("Test it out", IconNames.PLAY, () => {
+    history.push('/academy/missions/0/0');
+  })}
             {this.makeOptionsButton()}
             {makeOverviewCardButton(overview, this.props.listingPath)}
           </div>

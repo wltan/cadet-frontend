@@ -17,7 +17,7 @@ import { IState } from '../reducers/states';
  * An object with the relevant properties must be
  * returned instead of an object of type @type {IApplicationProps},
  * as the routing properties of @type {RouteComponentProps} are
- * provided using the withRouter() method below.
+ * provided using the with() method below.
  */
 const mapStateToProps: MapStateToProps<IStateProps, {}, IState> = state => ({
   title: state.application.title,
