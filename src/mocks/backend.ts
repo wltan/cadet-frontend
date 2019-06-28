@@ -6,7 +6,7 @@ import { retrieveLocalAssessment } from 'src/components/missionControl/xmlParseH
 import * as actions from '../actions';
 import * as actionTypes from '../actions/actionTypes';
 import { Grading, GradingQuestion } from '../components/academy/grading/gradingShape';
-import { IQuestion } from '../components/assessment/assessmentShape';
+import { IProgrammingQuestion, IQuestion } from '../components/assessment/assessmentShape';
 import { store } from '../createStore';
 import { IState } from '../reducers/states';
 import { history } from '../utils/history';
@@ -41,6 +41,10 @@ export function* mockBackendSaga(): SagaIterator {
   yield takeEvery(actionTypes.FETCH_ASSESSMENT, function*(action) {
     const assessment = retrieveLocalAssessment()!;
     assessment.id = (action as actionTypes.IAction).payload;
+    assessment.questions.map(question => {
+      (question as IProgrammingQuestion).autogradingResults = [];
+      return question;
+    });
     yield put(actions.updateAssessment({ ...assessment }));
   });
 
