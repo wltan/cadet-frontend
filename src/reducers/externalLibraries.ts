@@ -104,6 +104,7 @@ const soundsLibrary = [
   'triangle_sound',
   'sawtooth_sound',
   'play_unsafe',
+  'display_waveform',
   /** Microphone Sounds */
   'init_record',
   'record',
@@ -146,6 +147,15 @@ const videoLibrary = [
   'reset_filter'
 ];
 
+const machineLearningLibrary = [
+  'init_webcam',
+  'train_recognition',
+  'load_faceapi',
+  'change_label',
+  'array_push',
+  'normalise_data'
+];
+
 /**
  * Defines which external libraries are available for usage, and what
  * external symbols (exposed functions) are under them.
@@ -158,6 +168,7 @@ const libEntries: Array<[ExternalLibraryName, string[]]> = [
   [ExternalLibraryNames.SOUNDS, soundsLibrary],
   [ExternalLibraryNames.BINARYTREES, binaryTreesLibrary],
   [ExternalLibraryNames.PIXNFLIX, videoLibrary],
+  [ExternalLibraryNames.MACHINELEARNING, machineLearningLibrary],
   [
     ExternalLibraryNames.ALL,
     runesLibrary.concat(curvesLibrary, soundsLibrary, binaryTreesLibrary, videoLibrary)

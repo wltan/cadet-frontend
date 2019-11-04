@@ -35,9 +35,7 @@ function loadAllLibs() {
     '/externalLibs/visualizer/visualizer.js',
     // binary tree library
     '/externalLibs/tree.js',
-    // support for Practical Assessments
-    '/externalLibs/pe_library.js',
-    '/externalLibs/assert_compiled.js',
+    // support for Practical Assessments (presently none)
     // video
     '/externalLibs/video/video_lib.js',
     // inspector
@@ -76,6 +74,13 @@ function loadLib(externalLibraryName) {
         '/externalLibs/graphics/webGLhi_graph_ce.js',
         '/externalLibs/graphics/webGLgraphics.js',
         '/externalLibs/graphics/webGLcurve.js'
+      ]
+      break
+      case 'MACHINELEARNING':
+      files = [
+        // faceAPI
+        '/externalLibs/faceapi/face-api_last_version.min.js',
+        '/externalLibs/faceapi/faceapi.js',
       ]
       break
     default:
