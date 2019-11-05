@@ -281,14 +281,16 @@ const exportLibrary = (library: Library): IXmlParseStrDeployment => {
       $: {
         name: library.external.name
       },
-      SYMBOL: library.external.symbols || [],
+      SYMBOL: library.external.symbols || []
     },
-    GLOBAL: library.globals ? library.globals.map(x => {
-      return {
-        IDENTIFIER: [x[0]],
-        VALUE: [x[2]!]
-      };
-    }) : []
+    GLOBAL: library.globals
+      ? library.globals.map(x => {
+          return {
+            IDENTIFIER: [x[0]],
+            VALUE: [x[2]!]
+          };
+        })
+      : []
   };
 
   return deployment;
@@ -391,7 +393,7 @@ export const assessmentToXml = (
       TEXT: [question.content]
     };
 
-    if(question.library) {
+    if (question.library) {
       problem.DEPLOYMENT = [exportLibrary(question.library)];
     }
     if (question.graderLibrary && question.graderLibrary.chapter !== -1) {
