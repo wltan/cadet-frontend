@@ -25,12 +25,12 @@ export interface IXmlParseStrDeployment {
     SYMBOL: string[];
   }>;
   // deprecated EXTERNAL in DEPLOYMENT and GRADERDEPLOYMENT, use IMPORT instead
-  EXTERNAL?: Array<{
+  EXTERNAL?: {
     $: {
       name: ExternalLibraryName;
     };
     SYMBOL: string[];
-  }>;
+  };
 }
 
 export interface IXmlParseStrOverview {

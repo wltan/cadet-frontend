@@ -272,7 +272,7 @@ const download = (filename: string, text: string) => {
   document.body.removeChild(element);
 };
 
-const exportLibrary = (library: Library) => {
+const exportLibrary = (library: Library): IXmlParseStrDeployment => {
   const deployment = {
     $: {
       interpreter: library.chapter.toString()
@@ -280,23 +280,17 @@ const exportLibrary = (library: Library) => {
     EXTERNAL: {
       $: {
         name: library.external.name
-      }
-    }
+      },
+      SYMBOL: library.external.symbols || [],
+    },
+    GLOBAL: library.globals ? library.globals.map(x => {
+      return {
+        IDENTIFIER: [x[0]],
+        VALUE: [x[2]!]
+      };
+    }) : []
   };
 
-  if (library.external.symbols.length !== 0) {
-    /* tslint:disable:no-string-literal */
-    deployment.EXTERNAL['SYMBOL'] = library.external.symbols;
-  }
-  if (library.globals.length !== 0) {
-    /* tslint:disable:no-string-literal */
-    deployment['GLOBAL'] = library.globals.map(x => {
-      return {
-        IDENTIFIER: x[0],
-        VALUE: x[2]
-      };
-    });
-  }
   return deployment;
 };
 
@@ -397,13 +391,11 @@ export const assessmentToXml = (
       TEXT: [question.content]
     };
 
-    // TODO: check if this needs fixing.
-    if (question.library.chapter !== -1) {
-      problem.$['DEPLOYMENT'] = question.library.chapter;
+    if(question.library) {
+      problem.DEPLOYMENT = [exportLibrary(question.library)];
     }
-
     if (question.graderLibrary && question.graderLibrary.chapter !== -1) {
-      problem.$['GRADERDEPLOYMENT'] = question.graderLibrary.chapter;
+      problem.GRADERDEPLOYMENT = [exportLibrary(question.graderLibrary)];
     }
 
     return problem;
