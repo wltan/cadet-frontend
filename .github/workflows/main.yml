@@ -14,7 +14,6 @@ jobs:
       with:
         node-version: '10.x'
     - run: npm install
-    - run: npm test
     - run: npm build
     - name: AWS S3 Sync Action
       uses: awact/s3-action@0.1.1
