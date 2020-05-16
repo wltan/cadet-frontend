@@ -214,7 +214,7 @@
     var aceLines = document.getElementsByClassName('ace_line');
 
     // We are simply assuming they are sorted (they are).
-    if (gutterCells != undefined && aceLines != undefined) {
+    if (gutterCells[number] != undefined && aceLines[number] != undefined) {
       gutterCells[number].classList.add('ace_gutter-cell_hi');
       aceLines[number].classList.add('ace_line_hi');
     }
