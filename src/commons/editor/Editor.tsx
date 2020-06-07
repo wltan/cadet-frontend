@@ -541,6 +541,7 @@ class Editor extends React.PureComponent<EditorProps, {}> {
     });
   };
 
+  /*
   // @ts-ignore
   private showContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -559,7 +560,7 @@ class Editor extends React.PureComponent<EditorProps, {}> {
   );
   // indicate that context menu is open so we can add a CSS class to this element
   this.setState({ isContextMenuOpen: true });
-  };
+  }; */
 }
 
 /* Override handler, so does not trigger when focus is in editor */
