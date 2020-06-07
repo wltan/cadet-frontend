@@ -462,8 +462,8 @@ class Editor extends React.PureComponent<EditorProps, {}> {
     }
   };
 
-  private handleGutterClick = (e: any) => {
-    const target = e.domEvent.target;
+  private handleGutterClick = (e: AceMouseEvent) => {
+    const target = e.domEvent.target! as HTMLDivElement;
     if (
       target.className.indexOf('ace_gutter-cell') === -1 ||
       !e.editor.isFocused() ||
@@ -474,19 +474,20 @@ class Editor extends React.PureComponent<EditorProps, {}> {
 
     const row = e.getDocumentPosition().row;
     const content = e.editor.session.getLine(row);
-    const breakpoints = e.editor.session.getBreakpoints(row, 0);
+    const breakpoints = e.editor.session.getBreakpoints();
     if (
       breakpoints[row] === undefined &&
       content.length !== 0 &&
       !content.includes('//') &&
       !content.includes('debugger;')
     ) {
+      // @ts-ignore: If breakpoint class not provided, it will be ace_breakpoint.
       e.editor.session.setBreakpoint(row);
     } else {
       e.editor.session.clearBreakpoint(row);
     }
     e.stop();
-    this.props.handleEditorUpdateBreakpoints(e.editor.session.$breakpoints);
+    this.props.handleEditorUpdateBreakpoints(e.editor.session.getBreakpoints());
   };
 
   private handleAnnotationChange = (session: any) => () => {
