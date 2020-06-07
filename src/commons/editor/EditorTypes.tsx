@@ -5,11 +5,10 @@ export type Position = {
   column: number;
 };
 
-
 // Ref: https://github.com/ajaxorg/ace/blob/6933ab5202ca90b07b1d58a6b016c70f13d310eb/lib/ace/mouse/mouse_event.js#L40
 export type AceMouseEvent = {
   domEvent: React.MouseEvent<HTMLDivElement>;
-  editor: AceEditor["editor"];
+  editor: AceEditor['editor'];
   x: number;
   y: number;
   clientX: number;
@@ -26,4 +25,4 @@ export type AceMouseEvent = {
   getDocumentPosition: () => Position;
   inSelection: () => boolean; // Determines if the mouse position is selected.
   getButton: () => number; // 0 for leftmouse, 1 for middlemouse, 2 for rightmouse
-}
+};

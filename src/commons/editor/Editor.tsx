@@ -525,7 +525,7 @@ class Editor extends React.PureComponent<EditorProps, {}> {
       }
       checkSessionIdExists(
         this.props.editorSessionId,
-        () => { },
+        () => {},
         sessionIdNotFound,
         cannotReachServer
       );
@@ -555,17 +555,16 @@ class Editor extends React.PureComponent<EditorProps, {}> {
           <MenuItem disabled={true} text="Clicked on node" />
       </Menu>,
       { left: e.clientX, top: e.clientY },
-      () => this.setState({ isContextMenuOpen: false }),
+      () => this.setState({ isContextMenuOpen: false })
   );
   // indicate that context menu is open so we can add a CSS class to this element
   this.setState({ isContextMenuOpen: true });
-
-  }
+  };
 }
 
 /* Override handler, so does not trigger when focus is in editor */
 const handlers = {
-  goGreen: () => { }
+  goGreen: () => {}
 };
 
 // TODO: Removal
