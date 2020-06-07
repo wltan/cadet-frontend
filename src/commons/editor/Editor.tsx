@@ -21,7 +21,8 @@ import { checkSessionIdExists } from '../collabEditing/CollabEditingHelper';
 import { Documentation } from '../documentation/Documentation';
 import { Links } from '../utils/Constants';
 import AceRange from './EditorAceRange';
-import { Position } from './EditorTypes';
+import { AceMouseEvent, Position } from './EditorTypes';
+import { defaultKeyBindings as keyBindings } from './HotkeyBindings';
 
 /**
  * @property editorValue - The string content of the react-ace editor
@@ -207,48 +208,7 @@ class Editor extends React.PureComponent<EditorProps, {}> {
         <div className="row editor-react-ace">
           <AceEditor
             className="react-ace"
-            commands={[
-              {
-                name: 'evaluate',
-                bindKey: {
-                  win: 'Shift-Enter',
-                  mac: 'Shift-Enter'
-                },
-                exec: this.props.handleEditorEval
-              },
-              {
-                name: 'navigate',
-                bindKey: {
-                  win: 'Ctrl-B',
-                  mac: 'Command-B'
-                },
-                exec: this.handleNavigate
-              },
-              {
-                name: 'refactor',
-                bindKey: {
-                  win: 'Ctrl-M',
-                  mac: 'Command-M'
-                },
-                exec: this.handleRefactor
-              },
-              {
-                name: 'highlightScope',
-                bindKey: {
-                  win: 'Ctrl-Shift-H',
-                  mac: 'Command-Shift-H'
-                },
-                exec: this.handleHighlightScope
-              },
-              {
-                name: 'TypeInferenceDisplay',
-                bindKey: {
-                  win: 'Ctrl-Shift-M',
-                  mac: 'Command-Shift-M'
-                },
-                exec: this.handleTypeInferenceDisplay
-              }
-            ]}
+            commands={this.generateKeyBindings(keyBindings)}
             editorProps={{
               $blockScrolling: Infinity
             }}
