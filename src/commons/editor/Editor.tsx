@@ -282,6 +282,23 @@ class Editor extends React.PureComponent<EditorProps, {}> {
     this.AceEditor.current!.editor.renderer.scrollCursorIntoView(position, 0.5);
   };
 
+  private generateKeyBindings = (bindings: typeof keyBindings) => {
+    return bindings.map(cmd => {
+      const exec = typeof cmd.exec === 'function' ? cmd.exec : this[cmd.exec];
+      if(typeof exec !== 'function') {
+        console.error('Editor: Command cannot be bound due to invalid exec function', cmd, this);
+        throw new Error('Invalid Editor Command');
+      }
+      return { ...cmd, exec };
+    });
+  }
+
+  // @ts-ignore. This is used by generateKeyBindings
+  private handleEditorEval = () => { 
+    return this.props.handleEditorEval();
+  }
+
+  // @ts-ignore. This is used by generateKeyBindings
   private handleNavigate = () => {
     const chapter = this.props.sourceChapter;
     const variantString =
@@ -330,6 +347,7 @@ class Editor extends React.PureComponent<EditorProps, {}> {
     }
   };
 
+  // @ts-ignore. This is used by generateKeyBindings
   private handleRefactor = () => {
     const editor = (this.AceEditor.current as any).editor;
 
@@ -352,6 +370,7 @@ class Editor extends React.PureComponent<EditorProps, {}> {
     ranges.forEach(range => selection.addRange(range));
   };
 
+  // @ts-ignore. This is used by generateKeyBindings
   private handleHighlightScope = () => {
     const editor = this.AceEditor.current!.editor;
     if (!editor) {
@@ -420,6 +439,8 @@ class Editor extends React.PureComponent<EditorProps, {}> {
     }, 10);
   };
 
+
+  // @ts-ignore. This is used by generateKeyBindings
   private handleTypeInferenceDisplay = (): void => {
     const chapter = this.props.sourceChapter;
     const code = this.props.editorValue;
@@ -544,7 +565,7 @@ class Editor extends React.PureComponent<EditorProps, {}> {
       }
       checkSessionIdExists(
         this.props.editorSessionId,
-        () => {},
+        () => { },
         sessionIdNotFound,
         cannotReachServer
       );
@@ -559,11 +580,32 @@ class Editor extends React.PureComponent<EditorProps, {}> {
       this.props.handleSetWebsocketStatus!(0);
     });
   };
+
+  // @ts-ignore
+  private showContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+
+    ContextMenu.show(
+      <Menu>
+          <MenuItem icon="search-around" text="Search around..." />
+          <MenuItem icon="search" text="Object viewer" />
+          <MenuItem icon="graph-remove" text="Remove" />
+          <MenuItem icon="group-objects" text="Group" />
+          <MenuDivider />
+          <MenuItem disabled={true} text="Clicked on node" />
+      </Menu>,
+      { left: e.clientX, top: e.clientY },
+      () => this.setState({ isContextMenuOpen: false }),
+  );
+  // indicate that context menu is open so we can add a CSS class to this element
+  this.setState({ isContextMenuOpen: true });
+
+  }
 }
 
 /* Override handler, so does not trigger when focus is in editor */
 const handlers = {
-  goGreen: () => {}
+  goGreen: () => { }
 };
 
 // TODO: Removal
