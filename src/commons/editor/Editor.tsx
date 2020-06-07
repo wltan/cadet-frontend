@@ -245,18 +245,18 @@ class Editor extends React.PureComponent<EditorProps, {}> {
   private generateKeyBindings = (bindings: typeof keyBindings) => {
     return bindings.map(cmd => {
       const exec = typeof cmd.exec === 'function' ? cmd.exec : this[cmd.exec];
-      if(typeof exec !== 'function') {
+      if (typeof exec !== 'function') {
         console.error('Editor: Command cannot be bound due to invalid exec function', cmd, this);
         throw new Error('Invalid Editor Command');
       }
       return { ...cmd, exec };
     });
-  }
+  };
 
   // @ts-ignore. This is used by generateKeyBindings
-  private handleEditorEval = () => { 
+  private handleEditorEval = () => {
     return this.props.handleEditorEval();
-  }
+  };
 
   // @ts-ignore. This is used by generateKeyBindings
   private handleNavigate = () => {
@@ -398,7 +398,6 @@ class Editor extends React.PureComponent<EditorProps, {}> {
       this.markerIds = markerIds;
     }, 10);
   };
-
 
   // @ts-ignore. This is used by generateKeyBindings
   private handleTypeInferenceDisplay = (): void => {
