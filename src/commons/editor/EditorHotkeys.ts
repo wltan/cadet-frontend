@@ -1,21 +1,9 @@
-// The exec command:
-// can either be a: a string, or a function.
+export type KeyFunction = keyof typeof keyBindings;
 
-import { EditorHooks } from './Editor';
-
-// User facing KeyBinding to prevent infinite typescript loops
-export interface KeyBinding {
-  name: keyof Required<NonNullable<EditorHooks['hotkeys']>>;
-  bindKey: { win: string; mac: string };
-}
-
-export const defaultKeyBindings: KeyBinding[] = [
-  {
-    name: 'evaluate',
-    bindKey: {
-      win: 'Shift-Enter',
-      mac: 'Shift-Enter'
-    }
+export const keyBindings = {
+  evaluate: {
+    win: 'Shift-Enter',
+    mac: 'Shift-Enter'
   },
   // {
   //   name: 'navigate',
@@ -33,12 +21,9 @@ export const defaultKeyBindings: KeyBinding[] = [
   //   },
   //   exec: 'handleRefactor'
   // },
-  {
-    name: 'highlightScope',
-    bindKey: {
-      win: 'Ctrl-Shift-H',
-      mac: 'Command-Shift-H'
-    }
+  highlightScope: {
+    win: 'Ctrl-Shift-H',
+    mac: 'Command-Shift-H'
   }
   // {
   //   name: 'TypeInferenceDisplay',
@@ -48,4 +33,4 @@ export const defaultKeyBindings: KeyBinding[] = [
   //   },
   //   exec: 'handleTypeInferenceDisplay'
   // }
-];
+};

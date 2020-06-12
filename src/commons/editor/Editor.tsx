@@ -14,7 +14,7 @@ import { Variant } from 'js-slang/dist/types';
 import { Documentation } from '../documentation/Documentation';
 import { useMergedRef } from '../utils/Hooks';
 import { AceMouseEvent, Position } from './EditorTypes';
-import { defaultKeyBindings as keyBindings } from './EditorHotkeys';
+import { keyBindings, KeyFunction } from './EditorHotkeys';
 
 import useHighlighting from './UseHighlighting';
 
@@ -25,14 +25,13 @@ import WithNavigation from './WithNavigation';
 import WithTypeInference from './WithTypeInference';
 export type Constructor<T> = new (...args: any[]) => T; */
 
-export type EditorHooks = {
-  onChange?: IAceEditorProps['onChange'];
-  onCursorChange?: IAceEditorProps['onCursorChange'];
-  hotkeys?: {
-    evaluate?: () => void;
-    highlightScope?: () => void;
-  };
-};
+export type EditorKeyBindingHandlers = { [name in KeyFunction]?: () => void };
+export type EditorHook = (
+  inProps: Readonly<EditorProps>,
+  outProps: IAceEditorProps,
+  keyBindings: EditorKeyBindingHandlers,
+  reactAceRef: React.MutableRefObject<AceEditor | null>
+) => void;
 
 /**
  * @property editorValue - The string content of the react-ace editor
@@ -174,11 +173,6 @@ const EditorBase = React.forwardRef<AceEditor, EditorProps>(function EditorBase(
 ) {
   const reactAceRef: React.MutableRefObject<AceEditor | null> = React.useRef(null);
 
-  const hooks = [
-    { hotkeys: { evaluate: props.handleEditorEval } },
-    useHighlighting(reactAceRef, props.editorValue, props.sourceChapter)
-  ];
-
   const [sourceChapter, sourceVariant, externalLibraryName] = [
     props.sourceChapter || 1,
     props.sourceVariant || 'default',
@@ -251,48 +245,39 @@ const EditorBase = React.forwardRef<AceEditor, EditorProps>(function EditorBase(
     ]
   );
 
-  const commands = keyBindings.map(kb => ({
-    ...kb,
-    exec: () =>
-      hooks.forEach(hook => {
-        const fn = hook.hotkeys && hook.hotkeys[kb.name];
-        if (fn) fn();
-      })
-  }));
+  const keyHandlers: EditorKeyBindingHandlers = {};
+
+  const aceEditorProps: IAceEditorProps = {
+    className: 'react-ace',
+    editorProps: {
+      $blockScrolling: Infinity
+    },
+    markers: React.useMemo(() => getMarkers(props.highlightedLines), [props.highlightedLines]),
+    fontSize: 17,
+    height: '100%',
+    highlightActiveLine: false,
+    mode: getModeString(sourceChapter, sourceVariant, externalLibraryName),
+    theme: 'source',
+    value: props.editorValue,
+    width: '100%',
+    setOptions: {
+      enableBasicAutocompletion: true,
+      enableLiveAutocompletion: true,
+      fontFamily: "'Inconsolata', 'Consolas', monospace"
+    },
+    onChange
+  };
+
+  useHighlighting(props, aceEditorProps, keyHandlers, reactAceRef);
+
+  aceEditorProps.commands = Object.entries(keyHandlers)
+    .filter(([_, exec]) => exec)
+    .map(([name, exec]) => ({ name, bindKey: keyBindings[name], exec: exec! }));
 
   return (
     <HotKeys className="Editor" handlers={handlers}>
       <div className="row editor-react-ace">
-        <AceEditor
-          className="react-ace"
-          commands={commands}
-          editorProps={{
-            $blockScrolling: Infinity
-          }}
-          ref={useMergedRef(reactAceRef, forwardedRef)}
-          markers={React.useMemo(() => getMarkers(props.highlightedLines), [
-            props.highlightedLines
-          ])}
-          fontSize={17}
-          height="100%"
-          highlightActiveLine={false}
-          mode={getModeString(sourceChapter, sourceVariant, externalLibraryName)}
-          theme="source"
-          value={props.editorValue}
-          width="100%"
-          setOptions={{
-            enableBasicAutocompletion: true,
-            enableLiveAutocompletion: true,
-            fontFamily: "'Inconsolata', 'Consolas', monospace"
-          }}
-          onChange={(...args) => {
-            onChange(...args);
-            hooks.forEach(hook => hook.onChange && hook.onChange(...args));
-          }}
-          onCursorChange={(...args) =>
-            hooks.forEach(hook => hook.onCursorChange && hook.onCursorChange(...args))
-          }
-        />
+        <AceEditor {...aceEditorProps} ref={useMergedRef(reactAceRef, forwardedRef)} />
       </div>
     </HotKeys>
   );
