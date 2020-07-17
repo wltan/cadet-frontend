@@ -9,7 +9,6 @@ exports[`NavigationBar renders "Not logged in" correctly 1`] = `
         Source Academy
       </Blueprint3.NavbarHeading>
     </NavLink>
-     
     <NavLink activeClassName=\\"bp3-active\\" className=\\"NavigationBar__link bp3-button bp3-minimal\\" to=\\"/sourcecast\\">
       <Blueprint3.Icon icon=\\"music\\" />
       <div className=\\"navbar-button-text hidden-xs hidden-sm\\">
@@ -20,6 +19,12 @@ exports[`NavigationBar renders "Not logged in" correctly 1`] = `
       <Blueprint3.Icon icon=\\"code\\" />
       <div className=\\"navbar-button-text hidden-xs hidden-sm\\">
         Playground
+      </div>
+    </NavLink>
+    <NavLink activeClassName=\\"bp3-active\\" className=\\"NavigationBar__link bp3-button bp3-minimal\\" to=\\"/achievement\\">
+      <Blueprint3.Icon icon=\\"mountain\\" />
+      <div className=\\"navbar-button-text hidden-xs hidden-sm\\">
+        Achievement
       </div>
     </NavLink>
   </Blueprint3.NavbarGroup>
@@ -50,7 +55,6 @@ exports[`NavigationBar renders correctly with username 1`] = `
         Source Academy
       </Blueprint3.NavbarHeading>
     </NavLink>
-     
     <NavLink activeClassName=\\"bp3-active\\" className=\\"NavigationBar__link bp3-button bp3-minimal\\" to=\\"/sourcecast\\">
       <Blueprint3.Icon icon=\\"music\\" />
       <div className=\\"navbar-button-text hidden-xs hidden-sm\\">
@@ -61,6 +65,12 @@ exports[`NavigationBar renders correctly with username 1`] = `
       <Blueprint3.Icon icon=\\"code\\" />
       <div className=\\"navbar-button-text hidden-xs hidden-sm\\">
         Playground
+      </div>
+    </NavLink>
+    <NavLink activeClassName=\\"bp3-active\\" className=\\"NavigationBar__link bp3-button bp3-minimal\\" to=\\"/achievement\\">
+      <Blueprint3.Icon icon=\\"mountain\\" />
+      <div className=\\"navbar-button-text hidden-xs hidden-sm\\">
+        Achievement
       </div>
     </NavLink>
   </Blueprint3.NavbarGroup>
