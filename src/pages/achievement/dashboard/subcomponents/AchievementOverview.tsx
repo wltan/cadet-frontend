@@ -29,7 +29,12 @@ function AchievementOverview(props: AchievementOverviewProps) {
       <AchievementLevel studentExp={studentExp} />
       <h3>{name}</h3>
       <h3>{studio}</h3>
-      <h3>{week}</h3>
+      <h3
+        style={{ cursor: 'pointer' }}
+        onClick={() => window.open('http://www.nus.edu.sg/registrar/info/calendar/AY2020-2021.pdf')}
+      >
+        {week}
+      </h3>
       <Button
         outlined={true}
         style={{ fontWeight: 'bold', color: '#ffffff', border: 'solid' }}
