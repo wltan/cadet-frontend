@@ -80,9 +80,8 @@ export const prettifyDate = (deadline: Date) => {
 };
 
 // Converts Date to deadline countdown
-export const prettifyDeadline = (deadline: Date | undefined) => {
+export const prettifyDeadline = (deadline: Date | undefined, now: Date) => {
   /* ---------- Date constants ---------- */
-  const now = new Date();
   const daysPerWeek = 7;
   const hoursPerDay = 24;
   const millisecondsPerHour = 3600000;

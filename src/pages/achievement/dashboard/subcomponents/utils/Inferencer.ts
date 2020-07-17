@@ -54,9 +54,11 @@ class Node {
 class Inferencer {
   private achievements: AchievementItem[] = []; // note: the achievement_id might not be the same as its array index
   private nodeList: Map<number, Node> = new Map(); // key = achievement_id, value = achievement node
+  public now: Date;
 
-  constructor(achievements: AchievementItem[]) {
+  constructor(achievements: AchievementItem[], now: Date) {
     this.achievements = achievements;
+    this.now = now;
     this.processData();
   }
 
@@ -320,8 +322,6 @@ class Inferencer {
 
   // Set the node's display deadline by comparing with all descendants' deadlines
   private generateDisplayDeadline(node: Node) {
-    const now = new Date();
-
     // Comparator of two deadlines
     const compareDeadlines = (
       displayDeadline: Date | undefined,
@@ -332,7 +332,7 @@ class Inferencer {
       } else if (displayDeadline === undefined) {
         return currentDeadline;
       } else {
-        return now < currentDeadline && currentDeadline <= displayDeadline
+        return this.now < currentDeadline && currentDeadline <= displayDeadline
           ? currentDeadline
           : displayDeadline;
       }
@@ -351,9 +351,8 @@ class Inferencer {
   }
 
   private generateStatus(node: Node) {
-    const now = new Date();
     const deadline = node.displayDeadline;
-    if (deadline !== undefined && deadline.getTime() < now.getTime()) {
+    if (deadline !== undefined && deadline.getTime() < this.now.getTime()) {
       // deadline elapsed
       if (node.progressFrac === 0) {
         return (node.status = AchievementStatus.EXPIRED); // not attempted

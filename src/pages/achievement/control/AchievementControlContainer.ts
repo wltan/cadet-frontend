@@ -13,7 +13,7 @@ import { OverallState } from '../../../commons/application/ApplicationTypes';
 import AchievementControl, { DispatchProps, StateProps } from './AchievementControl';
 
 const mapStateToProps: MapStateToProps<StateProps, {}, OverallState> = state => ({
-  inferencer: new Inferencer(state.achievement.achievements)
+  inferencer: new Inferencer(state.achievement.achievements, new Date())
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = (dispatch: Dispatch) =>

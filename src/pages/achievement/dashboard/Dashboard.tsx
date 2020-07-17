@@ -1,5 +1,6 @@
 import { IconNames } from '@blueprintjs/icons';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { mockAchievements } from 'src/commons/mocks/AchievementMocks';
 
 import { AchievementAbility, FilterStatus } from '../../../commons/achievement/AchievementTypes';
 import AchievementFilter from './subcomponents/AchievementFilter';
@@ -8,27 +9,14 @@ import AchievementOverview from './subcomponents/AchievementOverview';
 import AchievementTask from './subcomponents/AchievementTask';
 import Inferencer from './subcomponents/utils/Inferencer';
 
-export type DispatchProps = {
-  handleAchievementsFetch: () => void;
-};
+export type DispatchProps = {};
 
-export type StateProps = {
-  inferencer: Inferencer;
-  name?: string;
-  group: string | null;
-};
+export type StateProps = {};
 
 function Dashboard(props: DispatchProps & StateProps) {
-  const { inferencer, name, group, handleAchievementsFetch } = props;
+  const [now, setNow] = useState<Date>(new Date());
 
-  useEffect(() => {
-    const isTrue = (value?: string): boolean =>
-      typeof value === 'string' && value.toUpperCase() === 'TRUE';
-
-    if (isTrue(process.env.REACT_APP_USE_BACKEND)) {
-      handleAchievementsFetch();
-    }
-  }, [handleAchievementsFetch]);
+  const inferencer = new Inferencer(mockAchievements, now);
 
   const [filterStatus, setFilterStatus] = useState<FilterStatus>(FilterStatus.ALL);
   const [modalId, setModalId] = useState<number>(-1);
@@ -84,9 +72,10 @@ function Dashboard(props: DispatchProps & StateProps) {
     <div className="AchievementDashboard">
       <div className="achievement-overview">
         <AchievementOverview
-          name={name === undefined ? 'User' : name}
-          studio={group === null ? 'Staff' : group}
+          name={'Tester'}
+          studio={'T12-A'}
           inferencer={inferencer}
+          setNow={setNow}
         />
       </div>
       <div className="achievement-main">

@@ -73,7 +73,7 @@ function AchievementCard(props: AchievementCardProps) {
           <div className="ability">
             <p>{ability}</p>
           </div>
-          <AchievementDeadline deadline={displayDeadline} ability={ability} />
+          <AchievementDeadline deadline={displayDeadline} ability={ability} now={inferencer.now} />
           <AchievementExp exp={displayExp} />
         </div>
 

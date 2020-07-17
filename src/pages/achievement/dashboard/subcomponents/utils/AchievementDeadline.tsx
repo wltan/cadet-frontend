@@ -8,13 +8,13 @@ import { prettifyDeadline } from './DateHelper';
 type AchievementDeadlineProps = {
   deadline?: Date;
   ability: AchievementAbility;
+  now: Date;
 };
 
 function AchievementDeadline(props: AchievementDeadlineProps) {
-  const { deadline, ability } = props;
+  const { deadline, ability, now } = props;
 
   const one_day = 86400000;
-  const now = new Date();
   const deadlineColor =
     ability === AchievementAbility.CORE &&
     deadline !== undefined &&
@@ -27,7 +27,7 @@ function AchievementDeadline(props: AchievementDeadlineProps) {
     <div className="deadline">
       <Icon icon={IconNames.STOPWATCH} color={deadlineColor} />
       <span style={{ color: deadlineColor }}>
-        <p>{prettifyDeadline(deadline)}</p>
+        <p>{prettifyDeadline(deadline, now)}</p>
       </span>
     </div>
   );
