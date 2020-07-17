@@ -14,7 +14,7 @@ export type DispatchProps = {};
 export type StateProps = {};
 
 function Dashboard(props: DispatchProps & StateProps) {
-  const [now, setNow] = useState<Date>(new Date());
+  const [now, setNow] = useState<Date>(new Date(2020, 7, 27, 9, 0, 0));
 
   const inferencer = new Inferencer(mockAchievements, now);
 
